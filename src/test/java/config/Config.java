@@ -11,7 +11,7 @@ public class Config {
 
     private Config(){}
 
-    public static AppConfig getInstance() {
+    public static AppConfig getConfig() {
         if(instance == null){
             synchronized (Config.class){
                 if (instance == null){

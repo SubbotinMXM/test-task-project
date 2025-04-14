@@ -13,12 +13,12 @@ import lombok.Getter;
 
 @Getter
 public enum Users {
-    STANDART_USER("standard_user", Config.getInstance().password()),
-    LOCKED_OUT_USER("locked_out_user", Config.getInstance().password()),
-    PROBLEM_USER("problem_user", Config.getInstance().password()),
-    PERFORMANCE_GLITCH_USER("performance_glitch_user", Config.getInstance().password()),
-    ERROR_USER("error_user", Config.getInstance().password()),
-    VISUAL_USER("visual_user", Config.getInstance().password());
+    STANDART_USER("standard_user", Config.getConfig().password()),
+    LOCKED_OUT_USER("locked_out_user", Config.getConfig().password()),
+    PROBLEM_USER("problem_user", Config.getConfig().password()),
+    PERFORMANCE_GLITCH_USER("performance_glitch_user", Config.getConfig().password()),
+    ERROR_USER("error_user", Config.getConfig().password()),
+    VISUAL_USER("visual_user", Config.getConfig().password());
 
     private final String LOGIN;
 
