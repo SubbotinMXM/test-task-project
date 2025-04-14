@@ -59,4 +59,7 @@ public class Tests extends TestBase {
                 .finish()
                 .checkOrderSucceed();
     }
+
+
+    // тестим п.2
 }
