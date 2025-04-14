@@ -60,3 +60,6 @@ public class Tests extends TestBase {
                 .checkOrderSucceed();
     }
 }
+
+
+// тестим пункт 4
