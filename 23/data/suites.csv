@@ -1,4 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","1359","Тест добавления товаров в корзину","","Sun May 25 14:15:53 GMT 2025","passed","Sun May 25 14:15:54 GMT 2025","","tests.Tests","tests.Tests","successAddProductsToCartTest"
-"","10936","Тест авторизации","","Sun May 25 14:15:42 GMT 2025","passed","Sun May 25 14:15:53 GMT 2025","","tests.Tests","tests.Tests","successLoginTest"
-"","1995","Тест оформления заказа","","Sun May 25 14:15:54 GMT 2025","passed","Sun May 25 14:15:56 GMT 2025","","tests.Tests","tests.Tests","successOrderTest"
