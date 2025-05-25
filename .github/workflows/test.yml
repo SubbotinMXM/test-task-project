@@ -5,14 +5,24 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Select test type to run'
+        required: true
+        default: 'smoke_test'
+        type: choice
+        options:
+        - smoke_test
+        - web_test
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+      
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -22,12 +32,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Run tests with tag
-        run: gradle clean test
+      - name: Run ${{ github.event.inputs.test_type || 'smoke_test' }} tests
+        run: ./gradlew clean ${{ github.event.inputs.test_type || 'smoke_test' }}
 
       - name: Test marketplace action
-        uses: simple-elf/allure-report-action@master
         if: always()
+        uses: simple-elf/allure-report-action@master
         id: allure-report
         with:
           allure_results: build/allure-results
