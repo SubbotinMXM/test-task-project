@@ -1,9 +1,6 @@
 package config;
 
 import org.aeonbits.owner.Config;
-import org.aeonbits.owner.Config.Sources;
-import org.aeonbits.owner.Config.Key;
-import org.aeonbits.owner.Config.DefaultValue;
 
 /**
  * Интерфейс для чтения значений из properties файла
@@ -31,7 +28,7 @@ public interface AppConfig extends Config {
     @DefaultValue("chrome")
     String browser();
 
-    @Key("isRemote")
+    @Key("headless")
     @DefaultValue("true")
     Boolean headless();
 }
