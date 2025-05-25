@@ -7,32 +7,38 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+permissions: write-all
 
 jobs:
   test:
+    name: Run Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
       - name: Run tests
         run: ./gradlew clean test
         continue-on-error: true
 
       - name: Load test report history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
@@ -46,6 +52,7 @@ jobs:
           gh_pages: gh-pages
           allure_results: build/allure-results
           allure_history: allure-history
+          keep_reports: 20
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -53,4 +60,15 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history 
+          publish_dir: allure-history
+
+      - name: Save test reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: |
+            build/reports/tests
+            build/test-results
+            build/allure-results
+          retention-days: 1 
