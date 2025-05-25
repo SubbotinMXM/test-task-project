@@ -12,7 +12,7 @@ public class CustomerDataPage {
             firstNameInput = $x("//input[@data-test='firstName']"),
             lastNameInput = $x("//input[@data-test='lastName']"),
             postalCodeInput = $x("//input[@data-test='postalCode']"),
-            continueBtn = $x("//input[@data-test='continue']");
+            continueBtn = $x("//input[@data-test='continu']");
 
     @Step("Заполнение данных покупателя")
     public CustomerDataPage fillData(UserData user){

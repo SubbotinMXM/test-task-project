@@ -19,11 +19,10 @@ import static navigation.Paths.CART_PATH;
 public class Tests extends TestBase {
 
     @Test
-    @DisplayName("Тест авторизации (сломанный)")
+    @DisplayName("Тест авторизации")
     void successLoginTest() {
         open(getConfig().baseUrl(), LoginPage.class)
-//                .login(STANDART_USER.getLOGIN(), STANDART_USER.getPASSWORD())
-                .login("asddasdFW", "123456789")
+                .login(STANDART_USER.getLOGIN(), STANDART_USER.getPASSWORD())
                 .checkPageLoaded();
     }
 
@@ -43,7 +42,7 @@ public class Tests extends TestBase {
     }
 
     @Test
-    @DisplayName("Тест оформления заказа")
+    @DisplayName("Тест оформления заказа (сломанный)")
     void successOrderTest(@RandomUser UserData user) {
         open(getConfig().baseUrl(), LoginPage.class)
                 .login(STANDART_USER.getLOGIN(), STANDART_USER.getPASSWORD());
