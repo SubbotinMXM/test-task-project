@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import pages.CartPage;
 import pages.LoginPage;
 
+
 import static com.codeborne.selenide.Selenide.open;
 import static config.Config.getConfig;
 import static data.Users.STANDART_USER;
