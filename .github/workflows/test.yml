@@ -1,15 +1,10 @@
-name: Playwright Java CI
+name: Selenide CI
 
 on:
-  workflow_dispatch:
-    inputs:
-      test_tag:
-        description: 'Test tag to run'
-        required: false
-        default: 'regress'
-
-env:
-  TEST_TAG: ${{ github.event.inputs.test_tag || 'regress' }}
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -28,7 +23,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run tests with tag
-        run: gradle clean ${{env.TEST_TAG}}
+        run: gradle clean test
 
       - name: Test marketplace action
         uses: simple-elf/allure-report-action@master
