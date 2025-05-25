@@ -31,24 +31,17 @@ jobs:
         with:
           gradle-version: wrapper
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
+      # - name: Setup Chrome
+      #   uses: browser-actions/setup-chrome@v1
+      #   with:
+      #     chrome-version: stable
 
       - name: Run tests
         run: ./gradlew clean test
         continue-on-error: true
 
-      - name: Create gh-pages branch
-        if: always()
-        run: |
-          git checkout --orphan gh-pages || true
-          git rm -rf . || true
-          git clean -fdx || true
-          
       - name: Load test report history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         if: always()
         continue-on-error: true
         with:
@@ -60,8 +53,8 @@ jobs:
         if: always()
         with:
           gh_pages: gh-pages
-          allure_results: build/allure-results
           allure_history: allure-history
+          allure_results: build/allure-results
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -70,4 +63,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
-          force_orphan: true 
