@@ -7,7 +7,10 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 
-permissions: write-all
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   test:
@@ -37,6 +40,13 @@ jobs:
         run: ./gradlew clean test
         continue-on-error: true
 
+      - name: Create gh-pages branch
+        if: always()
+        run: |
+          git checkout --orphan gh-pages || true
+          git rm -rf . || true
+          git clean -fdx || true
+          
       - name: Load test report history
         uses: actions/checkout@v3
         if: always()
@@ -59,4 +69,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history 
+          publish_dir: allure-history
+          force_orphan: true 
