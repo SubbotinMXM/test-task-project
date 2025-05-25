@@ -26,41 +26,26 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          gradle-version: wrapper
-
-      # - name: Setup Chrome
-      #   uses: browser-actions/setup-chrome@v1
-      #   with:
-      #     chrome-version: stable
-
-      - name: Run tests
-        run: ./gradlew clean test
-        continue-on-error: true
-
-      - name: Load test report history
-        uses: actions/checkout@v4
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+  
+      - name: Run tests 
+        run: gradle clean test
+  
+      - name: Test marketplace action
+        uses: simple-elf/allure-report-action@master
         if: always()
-        continue-on-error: true
+        id: allure-report
         with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
           allure_results: build/allure-results
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+  
+      - name: Deploy report to Github Pages
         if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
-          force_orphan: true
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
