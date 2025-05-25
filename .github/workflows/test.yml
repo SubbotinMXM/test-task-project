@@ -32,6 +32,14 @@ jobs:
         run: ./gradlew test -DisRemote=true
         continue-on-error: true
 
+      - name: Store test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: build/allure-results
+          retention-days: 1
+
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
@@ -48,15 +56,25 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
+      - name: Store generated report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: allure-report
+          path: allure-history
+          retention-days: 1
+
       - name: Setup Pages
         uses: actions/configure-pages@v2
+        if: always()
 
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v1
+        if: always()
         with:
-          path: 'allure-history'
+          path: allure-history
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
-        if: always() 
+        if: always()
+        uses: actions/deploy-pages@v1 
