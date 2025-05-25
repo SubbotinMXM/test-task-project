@@ -23,7 +23,7 @@ public class Tests extends TestBase {
     void successLoginTest() {
         open(getConfig().baseUrl(), LoginPage.class)
 //                .login(STANDART_USER.getLOGIN(), STANDART_USER.getPASSWORD())
-                .login(STANDART_USER.getLOGIN(), "12345678")
+                .login("asddasdFW", "123456789")
                 .checkPageLoaded();
     }
 
