@@ -1,4 +1,4 @@
-name: Test and Publish Report
+name: Test and Publish Allure
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Execute Tests
-        run: ./gradlew test -DisRemote=true
+        run: ./gradlew clean test
         continue-on-error: true
 
       - name: Get Allure history
