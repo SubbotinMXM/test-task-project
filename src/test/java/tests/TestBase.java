@@ -14,7 +14,7 @@ public class TestBase {
         SelenideLogger.addListener("allure", new AllureSelenide());
         Configuration.browserSize = Config.getConfig().browserSize();
         Configuration.browser = Config.getConfig().browser();
-        Configuration.headless = Config.getConfig().isRemote();
+        Configuration.headless = Config.getConfig().headless();
     }
     MainPage mainPage = new MainPage();
 }

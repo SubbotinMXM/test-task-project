@@ -32,6 +32,6 @@ public interface AppConfig extends Config {
     String browser();
 
     @Key("isRemote")
-    @DefaultValue("false")
-    Boolean isRemote();
+    @DefaultValue("true")
+    Boolean headless();
 }
