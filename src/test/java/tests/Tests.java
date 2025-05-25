@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import pages.CartPage;
 import pages.LoginPage;
 
-
 import static com.codeborne.selenide.Selenide.open;
 import static config.Config.getConfig;
 import static data.Users.STANDART_USER;
@@ -20,10 +19,11 @@ import static navigation.Paths.CART_PATH;
 public class Tests extends TestBase {
 
     @Test
-    @DisplayName("Тест авторизации")
+    @DisplayName("Тест авторизации (сломанный)")
     void successLoginTest() {
         open(getConfig().baseUrl(), LoginPage.class)
-                .login(STANDART_USER.getLOGIN(), STANDART_USER.getPASSWORD())
+//                .login(STANDART_USER.getLOGIN(), STANDART_USER.getPASSWORD())
+                .login(STANDART_USER.getLOGIN(), "12345678")
                 .checkPageLoaded();
     }
 
