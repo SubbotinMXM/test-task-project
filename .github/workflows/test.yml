@@ -1,4 +1,4 @@
-name: Test and Publish Report
+name: Run tests and publish report
 
 on:
   push:
@@ -8,31 +8,30 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          distribution: temurin
+          java-version: 17
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Execute Tests
+      - name: Run tests
         run: ./gradlew clean test
         continue-on-error: true
 
-      - name: Get Allure history
+      - name: Load test report history
         uses: actions/checkout@v3
         if: always()
         continue-on-error: true
@@ -40,26 +39,18 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Allure Report action
-        uses: allure-framework/allure-github-actions@v2
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
-          allure_results: build/allure-results
           gh_pages: gh-pages
-          allure_report: allure-report
+          allure_results: build/allure-results
           allure_history: allure-history
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        if: always()
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
-          path: allure-history
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        if: always()
-        uses: actions/deploy-pages@v1 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history 
