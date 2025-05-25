@@ -32,14 +32,6 @@ jobs:
         run: ./gradlew test -DisRemote=true
         continue-on-error: true
 
-      - name: Store test results
-        if: always()
-        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb # tag=v3.1.1
-        with:
-          name: test-results
-          path: build/allure-results
-          retention-days: 1
-
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
@@ -55,14 +47,6 @@ jobs:
           allure_results: build/allure-results
           allure_history: allure-history
           keep_reports: 20
-
-      - name: Store generated report
-        if: always()
-        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb # tag=v3.1.1
-        with:
-          name: allure-report
-          path: allure-history
-          retention-days: 1
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
